@@ -50,13 +50,12 @@ import com.example.androiddevchallenge.ui.theme.typography
 import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
-fun DetailScreen(doggo: Doggo, navigate: () -> Unit) {
+fun DetailScreen(doggo: Doggo) {
     val info = doggo.breeds.first()
-    Column() {
+    Column {
         DoggoImage(info.name, doggo.url)
         Spacer(modifier = Modifier.padding(vertical = 4.dp))
         DetailCard(info)
-        // FavouriteButton()
     }
 }
 

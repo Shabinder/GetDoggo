@@ -64,9 +64,6 @@ fun Item(index: Int, doggo: Doggo, onClick: (Int) -> Unit) {
         CoilImage(
             data = imgUri,
             "Dogo's Pic",
-            // fix on Lowed SDKs Tests on test(AVD) - 6.0 failed: Instrumentation run failed due to 'android.content.res.Resources$NotFoundException'
-            //loading = { Image(painterResource(id = R.drawable.ic_dog), "", Modifier.size(65.dp)) },
-            //error = { Image(painterResource(id = R.drawable.ic_dog), "", Modifier.size(65.dp)) },
             contentScale = ContentScale.Crop,
             fadeIn = true,
             modifier = Modifier.height(75.dp).width(90.dp).clip(RoundedCornerShape(size = 8.dp))
@@ -84,16 +81,5 @@ fun Item(index: Int, doggo: Doggo, onClick: (Int) -> Unit) {
                 }
             )
         )
-        // fix on Lowed SDKs Tests on test(AVD) - 6.0 failed: Instrumentation run failed due to 'android.content.res.Resources$NotFoundException'
-        /*Image(
-            painterResource(id = R.drawable.ic_heart_paw),
-            "Favourite",
-            modifier = Modifier.clip(RoundedCornerShape(percent = 30)).clickable(
-                onClick = {
-                    Toast.makeText(MainActivity.Instance, "TODO: Favourite Functionality", Toast.LENGTH_SHORT).show()
-                }
-            )
-        )*/
-
     }
 }

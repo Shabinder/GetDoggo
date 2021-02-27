@@ -82,9 +82,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
     companion object {
-        /*
-        * God Activity so Active Throughout App.(Ignore Leak)
-        * */
         lateinit var Instance: MainActivity
     }
     init {
@@ -136,15 +133,9 @@ fun MainContent(
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        /*// Draw a scrim over the status bar which matches the app bar
-        Spacer(
-            Modifier.background(appBarColor).fillMaxWidth()
-                .statusBarsHeight()
-        )*/
         AppBar(
             modifier = Modifier.fillMaxWidth()
         )
-        // Space for Animation
         Spacer(Modifier.padding(top = topPadding))
         ComposeNavigation(
             navController,
@@ -158,12 +149,6 @@ fun AppBar(modifier: Modifier) {
         backgroundColor = Color.White,
         title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                // fix on Lowed SDKs Tests on test(AVD) - 6.0 failed: Instrumentation run failed due to 'android.content.res.Resources$NotFoundException'
-                /*Image(
-                    painterResource(R.drawable.ic_dog),
-                    "Logo",
-                    Modifier.size(42.dp)
-                )*/
                 CoilImage(
                     "https://image.flaticon.com/icons/png/128/1303/1303561.png",
                     "Logo",

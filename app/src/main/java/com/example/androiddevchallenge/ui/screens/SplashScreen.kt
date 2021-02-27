@@ -43,7 +43,6 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        // Adds composition consistency. Use the value when LaunchedEffect is first called
         val currentOnTimeout by rememberUpdatedState(onTimeout)
         var visible by remember { mutableStateOf(false) }
 
@@ -58,9 +57,7 @@ fun SplashScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
         Column {
             Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
                 AnimatedVisibility(visible = visible) {
-                    // fix on Lowed SDKs Tests on test(AVD) - 6.0 failed: Instrumentation run failed due to 'android.content.res.Resources$NotFoundException'
-                    //Image(painterResource(id = R.drawable.ic_dog), contentDescription = "App Logo")
-                    CoilImage("https://image.flaticon.com/icons/png/128/1303/1303561.png", contentDescription = "App Logo",Modifier.size(92.dp))
+                    CoilImage("https://image.flaticon.com/icons/png/128/1303/1303561.png", contentDescription = "App Logo", Modifier.size(92.dp))
                 }
                 Spacer(Modifier.padding(vertical = 2.dp))
                 Text("GetDoggo", style = appNameStyle)
