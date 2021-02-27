@@ -54,12 +54,7 @@ fun ComposeNavigation(
         ) {
             DetailScreen(
                 viewModel.doggoList[it.arguments?.getInt("index") ?: 0]
-            ) {
-                navController.navigate("home") {
-                    launchSingleTop = true
-                    popUpTo(route = "home") {}
-                }
-            }
+            )
         }
     }
 }
