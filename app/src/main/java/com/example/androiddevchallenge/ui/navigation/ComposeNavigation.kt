@@ -24,7 +24,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
-import androidx.navigation.compose.popUpTo
 import com.example.androiddevchallenge.MainViewModel
 import com.example.androiddevchallenge.ui.screens.DetailScreen
 import com.example.androiddevchallenge.ui.screens.HomeScreen
