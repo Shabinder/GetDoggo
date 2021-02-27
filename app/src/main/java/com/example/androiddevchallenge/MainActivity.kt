@@ -18,44 +18,142 @@ package com.example.androiddevchallenge
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.androiddevchallenge.ui.navigation.ComposeNavigation
+import com.example.androiddevchallenge.ui.screens.SplashScreen
 import com.example.androiddevchallenge.ui.theme.MyTheme
+import com.example.androiddevchallenge.ui.theme.appNameStyle
 
+@ExperimentalAnimationApi
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var navController: NavHostController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyTheme {
-                MyApp()
+                // A surface container using the 'background' color from the theme
+                Surface(color = MaterialTheme.colors.background) {
+                    navController = rememberNavController()
+                    MainScreen(navController)
+                }
             }
         }
     }
 }
 
-// Start building your app here!
+
+@ExperimentalAnimationApi
 @Composable
-fun MyApp() {
-    Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
+fun MainScreen(navController: NavHostController) {
+    val transitionState = remember { MutableTransitionState(SplashState.Shown) }
+    val transition = updateTransition(transitionState)
+    val splashAlpha by transition.animateFloat(
+        transitionSpec = { tween(durationMillis = 100) }
+    ) {
+        if (it == SplashState.Shown) 1f else 0f
+    }
+    val contentAlpha by transition.animateFloat(
+        transitionSpec = { tween(durationMillis = 300) }
+    ) {
+        if (it == SplashState.Shown) 0f else 1f
+    }
+    val contentTopPadding by transition.animateDp(
+        transitionSpec = { spring(stiffness = Spring.StiffnessLow) }
+    ) {
+        if (it == SplashState.Shown) 100.dp else 0.dp
+    }
+
+    Box {
+        SplashScreen(
+            modifier = Modifier.alpha(splashAlpha),
+            onTimeout = { transitionState.targetState = SplashState.Completed }
+        )
+        MainContent(
+            navController,
+            modifier = Modifier.alpha(contentAlpha),
+            topPadding = contentTopPadding
+        )
     }
 }
 
-@Preview("Light Theme", widthDp = 360, heightDp = 640)
 @Composable
-fun LightPreview() {
-    MyTheme {
-        MyApp()
+fun MainContent(
+    navController: NavHostController,
+    modifier: Modifier,
+    topPadding: Dp,
+    viewModel :MainViewModel = viewModel()
+){
+    Column(
+        modifier = modifier.fillMaxSize()
+    ) {
+        /*// Draw a scrim over the status bar which matches the app bar
+        Spacer(
+            Modifier.background(appBarColor).fillMaxWidth()
+                .statusBarsHeight()
+        )*/
+        AppBar(
+            modifier = Modifier.fillMaxWidth()
+        )
+        //Space for Animation
+        Spacer(Modifier.padding(top = topPadding))
+        ComposeNavigation(
+            navController,
+        )
     }
 }
 
-@Preview("Dark Theme", widthDp = 360, heightDp = 640)
 @Composable
-fun DarkPreview() {
-    MyTheme(darkTheme = true) {
-        MyApp()
-    }
+fun AppBar(modifier: Modifier) {
+    TopAppBar(
+        backgroundColor = Color.White,
+        title = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Image(
+                    painterResource(R.drawable.ic_dog),
+                    "Logo",
+                    Modifier.size(42.dp)
+                )
+                Spacer(Modifier.padding(horizontal = 4.dp))
+                Text(
+                    text = "GetDoggo",
+                    style = appNameStyle.copy(fontSize = 38.sp)
+                )
+            }
+        },
+        /*actions = {
+            Providers(AmbientContentAlpha provides ContentAlpha.medium) {
+                IconButton(
+                    onClick = { *//* TODO: Open Preferences*//* }
+                ) {
+                    Icon(Icons.Filled.Settings, tint = Color.Gray)
+                }
+            }
+        },*/
+        modifier = modifier,
+    )
 }
+
+enum class SplashState { Shown, Completed }

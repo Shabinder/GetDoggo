@@ -16,10 +16,27 @@
 package com.example.androiddevchallenge.ui.theme
 
 import androidx.compose.material.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.androiddevchallenge.R
+
+
+val pristineFont = FontFamily(
+    Font(R.font.pristine_script, FontWeight.Bold)
+)
+
+val appNameStyle = TextStyle(
+    fontFamily = pristineFont,
+    fontSize = 46.sp,
+    fontWeight = FontWeight.SemiBold,
+    lineHeight = 48.sp,
+    letterSpacing = (1.5).sp,
+    color = Color(0xFF181818)
+)
 
 // Set of Material typography styles to start with
 val typography = Typography(
