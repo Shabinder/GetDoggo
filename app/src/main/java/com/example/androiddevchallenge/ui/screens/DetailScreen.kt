@@ -131,8 +131,6 @@ fun DoggoImage(
             data = imgUri,
             "Doggo's Image",
             contentScale = ContentScale.Crop,
-            //loading = { Image(painterResource(id = R.drawable.ic_dog), "") },
-            //error = { Image(painterResource(id = R.drawable.ic_dog), "") },
             modifier = Modifier
                 .width(210.dp)
                 .height(230.dp)
@@ -144,7 +142,6 @@ fun DoggoImage(
             maxLines = 2,
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
-            // color = colorAccent,
         )
     }
 }
