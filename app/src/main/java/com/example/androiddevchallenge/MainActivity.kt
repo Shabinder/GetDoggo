@@ -59,6 +59,7 @@ import com.example.androiddevchallenge.ui.navigation.ComposeNavigation
 import com.example.androiddevchallenge.ui.screens.SplashScreen
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import com.example.androiddevchallenge.ui.theme.appNameStyle
+import dev.chrisbanes.accompanist.coil.CoilImage
 
 @ExperimentalAnimationApi
 class MainActivity : AppCompatActivity() {
@@ -159,11 +160,18 @@ fun AppBar(modifier: Modifier) {
         backgroundColor = Color.White,
         title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
+                // fix on Lowed SDKs Tests on test(AVD) - 6.0 failed: Instrumentation run failed due to 'android.content.res.Resources$NotFoundException'
+                /*Image(
                     painterResource(R.drawable.ic_dog),
                     "Logo",
                     Modifier.size(42.dp)
+                )*/
+                CoilImage(
+                    "https://image.flaticon.com/icons/png/128/1303/1303561.png",
+                    "Logo",
+                    Modifier.size(42.dp)
                 )
+
                 Spacer(Modifier.padding(horizontal = 4.dp))
                 Text(
                     text = "GetDoggo",

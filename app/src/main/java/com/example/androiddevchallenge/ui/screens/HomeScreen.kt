@@ -68,8 +68,9 @@ fun Item(index: Int, doggo: Doggo, onClick: (Int) -> Unit) {
         CoilImage(
             data = imgUri,
             "Dogo's Pic",
-            loading = { Image(painterResource(id = R.drawable.ic_dog), "", Modifier.size(65.dp)) },
-            error = { Image(painterResource(id = R.drawable.ic_dog), "", Modifier.size(65.dp)) },
+            // fix on Lowed SDKs Tests on test(AVD) - 6.0 failed: Instrumentation run failed due to 'android.content.res.Resources$NotFoundException'
+            //loading = { Image(painterResource(id = R.drawable.ic_dog), "", Modifier.size(65.dp)) },
+            //error = { Image(painterResource(id = R.drawable.ic_dog), "", Modifier.size(65.dp)) },
             contentScale = ContentScale.Crop,
             fadeIn = true,
             modifier = Modifier.height(75.dp).width(90.dp).clip(RoundedCornerShape(size = 8.dp))
@@ -78,8 +79,8 @@ fun Item(index: Int, doggo: Doggo, onClick: (Int) -> Unit) {
             Text(info.name, maxLines = 1, overflow = TextOverflow.Ellipsis, style = typography.h6,)
             Text(info.bred_for ?: "", fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
-        Image(
-            painterResource(id = R.drawable.ic_heart_paw),
+        CoilImage(
+            "https://image.flaticon.com/icons/png/128/760/760993.png",
             "Favourite",
             modifier = Modifier.clip(RoundedCornerShape(percent = 30)).clickable(
                 onClick = {
@@ -87,5 +88,16 @@ fun Item(index: Int, doggo: Doggo, onClick: (Int) -> Unit) {
                 }
             )
         )
+        // fix on Lowed SDKs Tests on test(AVD) - 6.0 failed: Instrumentation run failed due to 'android.content.res.Resources$NotFoundException'
+        /*Image(
+            painterResource(id = R.drawable.ic_heart_paw),
+            "Favourite",
+            modifier = Modifier.clip(RoundedCornerShape(percent = 30)).clickable(
+                onClick = {
+                    Toast.makeText(MainActivity.Instance, "TODO: Favourite Functionality", Toast.LENGTH_SHORT).show()
+                }
+            )
+        )*/
+
     }
 }

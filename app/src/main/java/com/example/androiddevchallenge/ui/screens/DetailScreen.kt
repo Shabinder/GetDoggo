@@ -131,8 +131,8 @@ fun DoggoImage(
             data = imgUri,
             "Doggo's Image",
             contentScale = ContentScale.Crop,
-            loading = { Image(painterResource(id = R.drawable.ic_dog), "") },
-            error = { Image(painterResource(id = R.drawable.ic_dog), "") },
+            //loading = { Image(painterResource(id = R.drawable.ic_dog), "") },
+            //error = { Image(painterResource(id = R.drawable.ic_dog), "") },
             modifier = Modifier
                 .width(210.dp)
                 .height(230.dp)

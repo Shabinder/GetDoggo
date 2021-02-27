@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,6 +39,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.R
 import com.example.androiddevchallenge.ui.theme.appNameStyle
+import dev.chrisbanes.accompanist.coil.CoilImage
 import kotlinx.coroutines.delay
 
 @ExperimentalAnimationApi
@@ -59,7 +61,9 @@ fun SplashScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
         Column {
             Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
                 AnimatedVisibility(visible = visible) {
-                    Image(painterResource(id = R.drawable.ic_dog), contentDescription = "App Logo")
+                    // fix on Lowed SDKs Tests on test(AVD) - 6.0 failed: Instrumentation run failed due to 'android.content.res.Resources$NotFoundException'
+                    //Image(painterResource(id = R.drawable.ic_dog), contentDescription = "App Logo")
+                    CoilImage("https://image.flaticon.com/icons/png/128/1303/1303561.png", contentDescription = "App Logo",Modifier.size(92.dp))
                 }
                 Spacer(Modifier.padding(vertical = 2.dp))
                 Text("GetDoggo", style = appNameStyle)
