@@ -20,9 +20,22 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -39,7 +52,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.androiddevchallenge.models.getDoggoList
@@ -52,7 +64,7 @@ import com.example.androiddevchallenge.ui.theme.appNameStyle
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavHostController
-    private val viewModel : MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,24 +75,23 @@ class MainActivity : AppCompatActivity() {
                     navController = rememberNavController()
                     MainScreen(navController)
 
-                    LaunchedEffect(Unit){
+                    LaunchedEffect(Unit) {
                         viewModel.doggoList.addAll(getDoggoList())
                     }
                 }
             }
         }
     }
-    companion object{
+    companion object {
         /*
         * God Activity so Active Throughout App.(Ignore Leak)
         * */
-        lateinit var Instance:MainActivity
+        lateinit var Instance: MainActivity
     }
     init {
         Instance = this
     }
 }
-
 
 @ExperimentalAnimationApi
 @Composable
@@ -122,8 +133,7 @@ fun MainContent(
     navController: NavHostController,
     modifier: Modifier,
     topPadding: Dp,
-    viewModel :MainViewModel = viewModel()
-){
+) {
     Column(
         modifier = modifier.fillMaxSize()
     ) {
@@ -135,7 +145,7 @@ fun MainContent(
         AppBar(
             modifier = Modifier.fillMaxWidth()
         )
-        //Space for Animation
+        // Space for Animation
         Spacer(Modifier.padding(top = topPadding))
         ComposeNavigation(
             navController,

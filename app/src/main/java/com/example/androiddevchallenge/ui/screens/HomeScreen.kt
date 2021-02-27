@@ -1,11 +1,33 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.androiddevchallenge.ui.screens
 
 import android.widget.Toast
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,7 +37,6 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -30,39 +51,41 @@ import dev.chrisbanes.accompanist.coil.CoilImage
 
 @ExperimentalAnimationApi
 @Composable
-fun HomeScreen(list:SnapshotStateList<Doggo>,navigate: (index:Int)->Unit) {
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp),modifier = Modifier.padding(top = 8.dp).fillMaxSize()){
-        itemsIndexed(list){ i: Int, doggo: Doggo ->
-            Item(i,doggo,navigate)
+fun HomeScreen(list: SnapshotStateList<Doggo>, navigate: (index: Int) -> Unit) {
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp).fillMaxSize()) {
+        itemsIndexed(list) { i: Int, doggo: Doggo ->
+            Item(i, doggo, navigate)
         }
     }
 }
 
 @ExperimentalAnimationApi
 @Composable
-fun Item(index:Int,doggo: Doggo,onClick:(Int)->Unit) {
+fun Item(index: Int, doggo: Doggo, onClick: (Int) -> Unit) {
     val info = doggo.breeds.first()
-    Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier.padding(horizontal = 8.dp).fillMaxWidth().clickable { onClick(index) }) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp).fillMaxWidth().clickable { onClick(index) }) {
         val imgUri = doggo.url.toUri().buildUpon().scheme("https").build()
         CoilImage(
             data = imgUri,
             "Dogo's Pic",
-            loading = { Image(painterResource(id = R.drawable.ic_dog),"",Modifier.size(65.dp)) },
-            error = {Image(painterResource(id = R.drawable.ic_dog),"",Modifier.size(65.dp))},
+            loading = { Image(painterResource(id = R.drawable.ic_dog), "", Modifier.size(65.dp)) },
+            error = { Image(painterResource(id = R.drawable.ic_dog), "", Modifier.size(65.dp)) },
             contentScale = ContentScale.Crop,
             fadeIn = true,
             modifier = Modifier.height(75.dp).width(90.dp).clip(RoundedCornerShape(size = 8.dp))
         )
-        Column(modifier = Modifier.padding(horizontal = 8.dp).height(60.dp).weight(1f),verticalArrangement = Arrangement.SpaceEvenly) {
-            Text(info.name,maxLines = 1,overflow = TextOverflow.Ellipsis,style = typography.h6,)
-            Text(info.bred_for ?: "",fontSize = 13.sp,maxLines = 1,overflow = TextOverflow.Ellipsis)
+        Column(modifier = Modifier.padding(horizontal = 8.dp).height(60.dp).weight(1f), verticalArrangement = Arrangement.SpaceEvenly) {
+            Text(info.name, maxLines = 1, overflow = TextOverflow.Ellipsis, style = typography.h6,)
+            Text(info.bred_for ?: "", fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
         Image(
             painterResource(id = R.drawable.ic_heart_paw),
             "Favourite",
-            modifier = Modifier.clip(RoundedCornerShape(percent = 30)).clickable(onClick = {
-                Toast.makeText(MainActivity.Instance,"TODO: Favourite Functionality",Toast.LENGTH_SHORT).show()
-            })
+            modifier = Modifier.clip(RoundedCornerShape(percent = 30)).clickable(
+                onClick = {
+                    Toast.makeText(MainActivity.Instance, "TODO: Favourite Functionality", Toast.LENGTH_SHORT).show()
+                }
+            )
         )
     }
 }

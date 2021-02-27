@@ -1,40 +1,59 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.androiddevchallenge.ui.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.androiddevchallenge.ui.screens.HomeScreen
 import androidx.navigation.NavType
-import androidx.navigation.compose.*
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
+import androidx.navigation.compose.navigate
+import androidx.navigation.compose.popUpTo
 import com.example.androiddevchallenge.MainViewModel
 import com.example.androiddevchallenge.ui.screens.DetailScreen
+import com.example.androiddevchallenge.ui.screens.HomeScreen
 
 @ExperimentalAnimationApi
 @Composable
 fun ComposeNavigation(
     navController: NavHostController,
-    viewModel:MainViewModel = viewModel()
-){
+    viewModel: MainViewModel = viewModel()
+) {
     NavHost(
         navController,
         startDestination = "home",
     ) {
-        //HomeScreen - Starting Point
+        // HomeScreen - Starting Point
         composable("home") {
-            HomeScreen(viewModel.doggoList){
+            HomeScreen(viewModel.doggoList) {
                 navController.navigate("details/$it")
             }
         }
 
-        //Details Screen
-        //Argument `index` = index of Doggo List
-        composable (
+        // Details Screen
+        // Argument `index` = index of Doggo List
+        composable(
             "details/{index}",
             arguments = listOf(navArgument("index") { type = NavType.IntType })
         ) {
             DetailScreen(
-                it.arguments?.getInt("index") ?: -1
+                viewModel.doggoList[it.arguments?.getInt("index") ?: 0]
             ) {
                 navController.navigate("home") {
                     launchSingleTop = true

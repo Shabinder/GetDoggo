@@ -24,7 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.androiddevchallenge.R
 
-
 val pristineFont = FontFamily(
     Font(R.font.pristine_script, FontWeight.Bold)
 )
