@@ -17,6 +17,7 @@ package com.example.androiddevchallenge
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.*
@@ -27,6 +28,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.androiddevchallenge.models.getDoggoList
 import com.example.androiddevchallenge.ui.navigation.ComposeNavigation
 import com.example.androiddevchallenge.ui.screens.SplashScreen
 import com.example.androiddevchallenge.ui.theme.MyTheme
@@ -49,6 +52,7 @@ import com.example.androiddevchallenge.ui.theme.appNameStyle
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavHostController
+    private val viewModel : MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,9 +62,22 @@ class MainActivity : AppCompatActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     navController = rememberNavController()
                     MainScreen(navController)
+
+                    LaunchedEffect(Unit){
+                        viewModel.doggoList.addAll(getDoggoList())
+                    }
                 }
             }
         }
+    }
+    companion object{
+        /*
+        * God Activity so Active Throughout App.(Ignore Leak)
+        * */
+        lateinit var Instance:MainActivity
+    }
+    init {
+        Instance = this
     }
 }
 
@@ -99,6 +116,7 @@ fun MainScreen(navController: NavHostController) {
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun MainContent(
     navController: NavHostController,

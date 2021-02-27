@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Breed(
-    val bred_for: String? = "Unknown",
+    val bred_for: String? = "Companion, Good Luck Charms",
     val height: Height,
     val life_span: String,
     val name: String,
